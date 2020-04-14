@@ -14,6 +14,35 @@ Htpasswd parser for Go.
 go get -u github.com/kenkyu392/go-htpasswd
 ```
 
+## Usage
+
+```go
+package main
+
+import (
+	"os"
+
+	"github.com/kenkyu392/go-htpasswd"
+)
+
+func main() {
+	f, err := os.Open(".htpasswd")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	r := htpasswd.NewReader(f)
+	records, err := r.ReadAll()
+	if err != nil {
+		panic(err)
+	}
+	for _, record := range records {
+		// output: name, pass
+		println(record[0], record[1])
+	}
+}
+```
+
 ## License
 
 [MIT](LICENSE)
